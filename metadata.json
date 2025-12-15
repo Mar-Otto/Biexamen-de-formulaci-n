@@ -1,0 +1,5 @@
+{
+  "name": "El Biexamen de Formulación",
+  "description": "Aplicación de evaluación de química inorgánica que genera exámenes de 10, 20 o 30 preguntas sobre formulación y nomenclatura (Stock, Sistemática, Tradicional) de compuestos binarios, ternarios, cuaternarios e iones.",
+  "requestFramePermissions": []
+}

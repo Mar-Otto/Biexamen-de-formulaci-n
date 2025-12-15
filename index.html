@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>El Biexamen de Formulación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --xp-bg: #ECE9D8;
+        --xp-blue-border: #0055EA;
+        --xp-taskbar-start: #245DDA;
+        --xp-taskbar-end: #1842A2;
+        
+        /* BASIC OS THEME VARS */
+        --basic-bg: #0a0a0a;
+        --basic-text: #4af626; /* Phosphor Green */
+        --basic-dim: #1e5a12;
+        --basic-glow: 0 0 5px rgba(74, 246, 38, 0.4);
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden; /* Manage overflow within views */
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* ===========================
+         WINDOWS XP STYLES
+         =========================== */
+      .xp-mode {
+        font-family: 'Tahoma', 'Verdana', sans-serif;
+        background-color: #5385C1; 
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: black;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }
+
+      .win-box {
+        background-color: var(--xp-bg);
+        border: 3px solid var(--xp-blue-border);
+        border-radius: 8px 8px 0 0;
+        box-shadow: 6px 6px 20px rgba(0,0,0,0.4);
+        font-family: 'Tahoma', sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .win-title-bar {
+        background: linear-gradient(180deg, #0058EE 0%, #3593FF 4%, #288EFB 18%, #1978E5 44%, #126DD8 58%, #0A43AF 100%);
+        padding: 6px 10px;
+        color: white;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        border-bottom: 1px solid #003099;
+        cursor: default;
+        user-select: none;
+      }
+
+      .win-title-bar button {
+        background: linear-gradient(180deg, #E98579 0%, #D64232 50%, #C43222 100%);
+        border: 1px solid #FFF;
+        border-radius: 3px;
+        color: white;
+        font-weight: bold;
+        font-family: sans-serif;
+        font-size: 11px;
+        width: 21px;
+        height: 21px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 1px 1px 0 rgba(255,255,255,0.4);
+        cursor: pointer;
+        text-shadow: none;
+      }
+
+      .win-btn {
+        background: linear-gradient(180deg, #ffffff 0%, #f3f3f3 50%, #ececec 50%, #dddddd 100%);
+        border: 1px solid #003c74;
+        border-radius: 3px;
+        color: black;
+        padding: 4px 12px;
+        font-size: 11px;
+        font-family: 'Tahoma', sans-serif;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.1s;
+        box-shadow: inset 1px 1px 0 #fff;
+      }
+      .win-btn:hover {
+        box-shadow: inset 1px 1px 0 #fff, 0 0 2px #e6d9aa;
+        border-color: #e6b121; 
+      }
+      .win-btn:active {
+        background: #dadada;
+        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2);
+        transform: translateY(1px);
+      }
+      .win-btn:disabled {
+        color: #888;
+        background: #f0f0f0;
+        border-color: #999;
+        cursor: not-allowed;
+      }
+
+      .win-input {
+        border: 1px solid #7F9DB9;
+        padding: 4px;
+        font-family: 'Tahoma', sans-serif;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+      }
+      .win-input:focus {
+        outline: none;
+        border-color: #126DD8;
+      }
+
+      .xp-taskbar {
+        background: linear-gradient(180deg, #245DDA 0%, #3674E6 5%, #2258D6 20%, #1842A2 100%);
+        border-top: 1px solid #3E7ADE;
+        color: white;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+
+      fieldset {
+        border: 1px solid #D0D0BF;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+        background: transparent;
+      }
+      legend {
+        color: #0046D5;
+        padding: 0 4px;
+        font-size: 11px;
+        font-weight: normal;
+      }
+
+      .win-content-scroll::-webkit-scrollbar { width: 16px; }
+      .win-content-scroll::-webkit-scrollbar-track { background-color: #F1EFE2; border-left: 1px solid #E0DFE3; }
+      .win-content-scroll::-webkit-scrollbar-thumb { background-color: #C2D5FC; border: 1px solid #3C7FB1; border-radius: 2px; }
+      .win-content-scroll::-webkit-scrollbar-button { background-color: #ECE9D8; height: 16px; border: 1px solid #FFF; }
+
+      .xp-progress-bar-container {
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+        padding: 2px;
+        background: white;
+        height: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+      }
+      .xp-indeterminate-slider {
+        position: absolute;
+        top: 2px; left: 0; width: 80px; height: 14px;
+        display: flex; gap: 2px;
+        animation: xp-scroll 2s linear infinite;
+      }
+      .xp-block {
+        flex: 1; height: 100%;
+        background: linear-gradient(180deg, #D4EFD4 0%, #359834 50%, #157912 100%);
+        border-radius: 1px; box-shadow: 0 0 1px rgba(0,0,0,0.1);
+      }
+      @keyframes xp-scroll { 0% { left: -90px; } 100% { left: 100%; } }
+
+      /* ===========================
+         BASIC OS / RETRO STYLES
+         =========================== */
+      .basic-mode {
+        background-color: var(--basic-bg);
+        color: var(--basic-text);
+        font-family: 'VT323', monospace;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        text-shadow: var(--basic-glow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* CRT Scanline Effect */
+      .crt-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0) 50%,
+          rgba(0, 0, 0, 0.2) 50%,
+          rgba(0, 0, 0, 0.2)
+        );
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 50;
+      }
+
+      .basic-container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+        flex: 1;
+        overflow-y: auto;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* BASIC Scrollbar */
+      .basic-container::-webkit-scrollbar { width: 12px; }
+      .basic-container::-webkit-scrollbar-track { background: #000; border-left: 1px solid var(--basic-dim); }
+      .basic-container::-webkit-scrollbar-thumb { background: var(--basic-text); border: 2px solid #000; }
+
+      .basic-header {
+        border-bottom: 2px dashed var(--basic-text);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 1.2rem;
+      }
+
+      .basic-btn {
+        background: transparent;
+        color: var(--basic-text);
+        border: none;
+        text-align: left;
+        font-family: 'VT323', monospace;
+        font-size: 1.4rem;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+        text-shadow: var(--basic-glow);
+      }
+      .basic-btn:hover {
+        background-color: var(--basic-text);
+        color: var(--basic-bg);
+        padding-left: 10px;
+      }
+      .basic-btn::before {
+        content: "> ";
+      }
+
+      .basic-input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid var(--basic-text);
+        color: var(--basic-text);
+        font-family: 'VT323', monospace;
+        font-size: 1.5rem;
+        width: 100%;
+        outline: none;
+        text-shadow: var(--basic-glow);
+      }
+      .basic-input::placeholder {
+        color: var(--basic-dim);
+      }
+
+      .cursor-blink {
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .print-only { display: none; }
+      @media print {
+        @page { margin: 1.5cm; size: A4; }
+        .no-print, header, button, .win-title-bar, .win-btn, .xp-taskbar, .crt-overlay { display: none !important; }
+        .print-only { display: block !important; }
+        body { background: white !important; font-family: 'Times New Roman', serif; overflow: visible !important; height: auto !important; }
+        .win-box, .basic-mode, .basic-container { border: none !important; box-shadow: none !important; background: white !important; color: black !important; position: static !important; width: 100% !important; max-width: none !important; height: auto !important; transform: none !important; text-shadow: none !important; }
+        .win-box > div { background: transparent !important; overflow: visible !important; }
+        #root { display: block !important; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
